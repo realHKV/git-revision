@@ -12,7 +12,8 @@ const winPatterns=[
     [0,4,8],
     [2,4,6]
 ];
-
+let win=0;
+let disBtnCount=0;
 boxes.forEach((box)=>{
     box.addEventListener("click",()=>{
         console.log("box was clicked");
@@ -24,7 +25,13 @@ boxes.forEach((box)=>{
             turn0=true;
         }
         box.disabled=true;
-        checkWinner();
+        disBtnCount++;
+        console.log("disBtnCount",disBtnCount);
+        win=checkWinner();
+        console.log("win",win);
+        if(disBtnCount===9 && win!=1){
+            showDraw();
+        }
     });
 });
 
@@ -40,15 +47,21 @@ function checkWinner(){
                     console.log("WIN1");
                     showWinner(boxes[pattern[0]].innerText);
                     fillGrid();
-                    
+                    return 1;
             }
         }
     }
+    return 0;
 }
-let popup=document.querySelector(".popup");
+let popup1=document.querySelector(".popup1");
 function showWinner(winner) {
-    popup.innerText=`🎉 Winner is ${winner}! 🎉`;
-    popup.classList.remove("hide");
+    popup1.innerText=`🎉 Winner is ${winner}! 🎉`;
+    popup1.classList.remove("hide");
+  }
+  let popup2=document.querySelector(".popup2");
+  function showDraw() {
+    popup2.innerText=`DRAW !`;
+    popup2.classList.remove("hide");
   }
 
 document.querySelector("#resetButton").addEventListener("click",()=>{
